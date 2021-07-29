@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.bytecamp.program_repair.astor.grpc";
+option java_outer_classname = "AstorLanguageServerProto";
+
+package routeguide;
+
+service AstorLanguageServer {
+  rpc Execute(ExecuteRequest) returns (ExecuteResponse) {}
+
+}
+
+message ExecuteRequest {
+  repeated string args = 1;
+}
+message ExecuteResponse {
+  string arg = 1;
+}
