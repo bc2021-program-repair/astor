@@ -16,6 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ExecuteResponse() {
+    frameType_ = 0;
     arg_ = "";
   }
 
@@ -49,7 +50,13 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
+          case 8: {
+            int rawValue = input.readEnum();
+
+            frameType_ = rawValue;
+            break;
+          }
+          case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
             arg_ = s;
@@ -87,10 +94,137 @@ private static final long serialVersionUID = 0L;
             org.bytecamp.program_repair.astor.grpc.ExecuteResponse.class, org.bytecamp.program_repair.astor.grpc.ExecuteResponse.Builder.class);
   }
 
-  public static final int ARG_FIELD_NUMBER = 1;
+  /**
+   * Protobuf enum {@code routeguide.ExecuteResponse.FrameType}
+   */
+  public enum FrameType
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>STDOUT = 0;</code>
+     */
+    STDOUT(0),
+    /**
+     * <code>RESULT = 1;</code>
+     */
+    RESULT(1),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>STDOUT = 0;</code>
+     */
+    public static final int STDOUT_VALUE = 0;
+    /**
+     * <code>RESULT = 1;</code>
+     */
+    public static final int RESULT_VALUE = 1;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static FrameType valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static FrameType forNumber(int value) {
+      switch (value) {
+        case 0: return STDOUT;
+        case 1: return RESULT;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<FrameType>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        FrameType> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<FrameType>() {
+            public FrameType findValueByNumber(int number) {
+              return FrameType.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return org.bytecamp.program_repair.astor.grpc.ExecuteResponse.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final FrameType[] VALUES = values();
+
+    public static FrameType valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private FrameType(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:routeguide.ExecuteResponse.FrameType)
+  }
+
+  public static final int FRAME_TYPE_FIELD_NUMBER = 1;
+  private int frameType_;
+  /**
+   * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+   * @return The enum numeric value on the wire for frameType.
+   */
+  @java.lang.Override public int getFrameTypeValue() {
+    return frameType_;
+  }
+  /**
+   * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+   * @return The frameType.
+   */
+  @java.lang.Override public org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType getFrameType() {
+    @SuppressWarnings("deprecation")
+    org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType result = org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType.valueOf(frameType_);
+    return result == null ? org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType.UNRECOGNIZED : result;
+  }
+
+  public static final int ARG_FIELD_NUMBER = 2;
   private volatile java.lang.Object arg_;
   /**
-   * <code>string arg = 1;</code>
+   * <code>string arg = 2;</code>
    * @return The arg.
    */
   @java.lang.Override
@@ -107,7 +241,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string arg = 1;</code>
+   * <code>string arg = 2;</code>
    * @return The bytes for arg.
    */
   @java.lang.Override
@@ -139,8 +273,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (frameType_ != org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType.STDOUT.getNumber()) {
+      output.writeEnum(1, frameType_);
+    }
     if (!getArgBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, arg_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, arg_);
     }
     unknownFields.writeTo(output);
   }
@@ -151,8 +288,12 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (frameType_ != org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType.STDOUT.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(1, frameType_);
+    }
     if (!getArgBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, arg_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, arg_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -169,6 +310,7 @@ private static final long serialVersionUID = 0L;
     }
     org.bytecamp.program_repair.astor.grpc.ExecuteResponse other = (org.bytecamp.program_repair.astor.grpc.ExecuteResponse) obj;
 
+    if (frameType_ != other.frameType_) return false;
     if (!getArg()
         .equals(other.getArg())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
@@ -182,6 +324,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + FRAME_TYPE_FIELD_NUMBER;
+    hash = (53 * hash) + frameType_;
     hash = (37 * hash) + ARG_FIELD_NUMBER;
     hash = (53 * hash) + getArg().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -317,6 +461,8 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      frameType_ = 0;
+
       arg_ = "";
 
       return this;
@@ -345,6 +491,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public org.bytecamp.program_repair.astor.grpc.ExecuteResponse buildPartial() {
       org.bytecamp.program_repair.astor.grpc.ExecuteResponse result = new org.bytecamp.program_repair.astor.grpc.ExecuteResponse(this);
+      result.frameType_ = frameType_;
       result.arg_ = arg_;
       onBuilt();
       return result;
@@ -394,6 +541,9 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(org.bytecamp.program_repair.astor.grpc.ExecuteResponse other) {
       if (other == org.bytecamp.program_repair.astor.grpc.ExecuteResponse.getDefaultInstance()) return this;
+      if (other.frameType_ != 0) {
+        setFrameTypeValue(other.getFrameTypeValue());
+      }
       if (!other.getArg().isEmpty()) {
         arg_ = other.arg_;
         onChanged();
@@ -427,9 +577,63 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private int frameType_ = 0;
+    /**
+     * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+     * @return The enum numeric value on the wire for frameType.
+     */
+    @java.lang.Override public int getFrameTypeValue() {
+      return frameType_;
+    }
+    /**
+     * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+     * @param value The enum numeric value on the wire for frameType to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFrameTypeValue(int value) {
+      
+      frameType_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+     * @return The frameType.
+     */
+    @java.lang.Override
+    public org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType getFrameType() {
+      @SuppressWarnings("deprecation")
+      org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType result = org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType.valueOf(frameType_);
+      return result == null ? org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+     * @param value The frameType to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFrameType(org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      frameType_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearFrameType() {
+      
+      frameType_ = 0;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object arg_ = "";
     /**
-     * <code>string arg = 1;</code>
+     * <code>string arg = 2;</code>
      * @return The arg.
      */
     public java.lang.String getArg() {
@@ -445,7 +649,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string arg = 1;</code>
+     * <code>string arg = 2;</code>
      * @return The bytes for arg.
      */
     public com.google.protobuf.ByteString
@@ -462,7 +666,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string arg = 1;</code>
+     * <code>string arg = 2;</code>
      * @param value The arg to set.
      * @return This builder for chaining.
      */
@@ -477,7 +681,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string arg = 1;</code>
+     * <code>string arg = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearArg() {
@@ -487,7 +691,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string arg = 1;</code>
+     * <code>string arg = 2;</code>
      * @param value The bytes for arg to set.
      * @return This builder for chaining.
      */

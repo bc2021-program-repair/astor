@@ -8,12 +8,23 @@ public interface ExecuteResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string arg = 1;</code>
+   * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+   * @return The enum numeric value on the wire for frameType.
+   */
+  int getFrameTypeValue();
+  /**
+   * <code>.routeguide.ExecuteResponse.FrameType frame_type = 1;</code>
+   * @return The frameType.
+   */
+  org.bytecamp.program_repair.astor.grpc.ExecuteResponse.FrameType getFrameType();
+
+  /**
+   * <code>string arg = 2;</code>
    * @return The arg.
    */
   java.lang.String getArg();
   /**
-   * <code>string arg = 1;</code>
+   * <code>string arg = 2;</code>
    * @return The bytes for arg.
    */
   com.google.protobuf.ByteString

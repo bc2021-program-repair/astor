@@ -34,7 +34,7 @@ public final class AstorLanguageServerGrpc {
       fullMethodName = SERVICE_NAME + '/' + "Execute",
       requestType = org.bytecamp.program_repair.astor.grpc.ExecuteRequest.class,
       responseType = org.bytecamp.program_repair.astor.grpc.ExecuteResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<org.bytecamp.program_repair.astor.grpc.ExecuteRequest,
       org.bytecamp.program_repair.astor.grpc.ExecuteResponse> getExecuteMethod() {
     io.grpc.MethodDescriptor<org.bytecamp.program_repair.astor.grpc.ExecuteRequest, org.bytecamp.program_repair.astor.grpc.ExecuteResponse> getExecuteMethod;
@@ -43,7 +43,7 @@ public final class AstorLanguageServerGrpc {
         if ((getExecuteMethod = AstorLanguageServerGrpc.getExecuteMethod) == null) {
           AstorLanguageServerGrpc.getExecuteMethod = getExecuteMethod =
               io.grpc.MethodDescriptor.<org.bytecamp.program_repair.astor.grpc.ExecuteRequest, org.bytecamp.program_repair.astor.grpc.ExecuteResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Execute"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -117,7 +117,7 @@ public final class AstorLanguageServerGrpc {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getExecuteMethod(),
-            asyncUnaryCall(
+            asyncServerStreamingCall(
               new MethodHandlers<
                 org.bytecamp.program_repair.astor.grpc.ExecuteRequest,
                 org.bytecamp.program_repair.astor.grpc.ExecuteResponse>(
@@ -144,7 +144,7 @@ public final class AstorLanguageServerGrpc {
      */
     public void execute(org.bytecamp.program_repair.astor.grpc.ExecuteRequest request,
         io.grpc.stub.StreamObserver<org.bytecamp.program_repair.astor.grpc.ExecuteResponse> responseObserver) {
-      asyncUnaryCall(
+      asyncServerStreamingCall(
           getChannel().newCall(getExecuteMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -165,8 +165,9 @@ public final class AstorLanguageServerGrpc {
 
     /**
      */
-    public org.bytecamp.program_repair.astor.grpc.ExecuteResponse execute(org.bytecamp.program_repair.astor.grpc.ExecuteRequest request) {
-      return blockingUnaryCall(
+    public java.util.Iterator<org.bytecamp.program_repair.astor.grpc.ExecuteResponse> execute(
+        org.bytecamp.program_repair.astor.grpc.ExecuteRequest request) {
+      return blockingServerStreamingCall(
           getChannel(), getExecuteMethod(), getCallOptions(), request);
     }
   }
@@ -183,14 +184,6 @@ public final class AstorLanguageServerGrpc {
     protected AstorLanguageServerFutureStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new AstorLanguageServerFutureStub(channel, callOptions);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<org.bytecamp.program_repair.astor.grpc.ExecuteResponse> execute(
-        org.bytecamp.program_repair.astor.grpc.ExecuteRequest request) {
-      return futureUnaryCall(
-          getChannel().newCall(getExecuteMethod(), getCallOptions()), request);
     }
   }
 

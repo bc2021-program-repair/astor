@@ -34,12 +34,15 @@ public final class AstorLanguageServerProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022astor_server.proto\022\nrouteguide\"\036\n\016Exec" +
-      "uteRequest\022\014\n\004args\030\001 \003(\t\"\036\n\017ExecuteRespo" +
-      "nse\022\013\n\003arg\030\001 \001(\t2[\n\023AstorLanguageServer\022" +
-      "D\n\007Execute\022\032.routeguide.ExecuteRequest\032\033" +
-      ".routeguide.ExecuteResponse\"\000BD\n&org.byt" +
-      "ecamp.program_repair.astor.grpcB\030AstorLa" +
-      "nguageServerProtoP\001b\006proto3"
+      "uteRequest\022\014\n\004args\030\001 \003(\t\"~\n\017ExecuteRespo" +
+      "nse\0229\n\nframe_type\030\001 \001(\0162%.routeguide.Exe" +
+      "cuteResponse.FrameType\022\013\n\003arg\030\002 \001(\t\"#\n\tF" +
+      "rameType\022\n\n\006STDOUT\020\000\022\n\n\006RESULT\020\0012]\n\023Asto" +
+      "rLanguageServer\022F\n\007Execute\022\032.routeguide." +
+      "ExecuteRequest\032\033.routeguide.ExecuteRespo" +
+      "nse\"\0000\001BD\n&org.bytecamp.program_repair.a" +
+      "stor.grpcB\030AstorLanguageServerProtoP\001b\006p" +
+      "roto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -56,7 +59,7 @@ public final class AstorLanguageServerProto {
     internal_static_routeguide_ExecuteResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_routeguide_ExecuteResponse_descriptor,
-        new java.lang.String[] { "Arg", });
+        new java.lang.String[] { "FrameType", "Arg", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

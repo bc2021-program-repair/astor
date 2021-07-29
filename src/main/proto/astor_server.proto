@@ -7,13 +7,19 @@ option java_outer_classname = "AstorLanguageServerProto";
 package routeguide;
 
 service AstorLanguageServer {
-  rpc Execute(ExecuteRequest) returns (ExecuteResponse) {}
+  rpc Execute(ExecuteRequest) returns (stream ExecuteResponse) {}
 
 }
 
 message ExecuteRequest {
   repeated string args = 1;
 }
+
 message ExecuteResponse {
-  string arg = 1;
+  FrameType frame_type = 1;
+  string arg = 2;
+  enum FrameType {
+    STDOUT = 0;
+    RESULT = 1;
+  }
 }
