@@ -5,12 +5,12 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-public class StdoutStream extends OutputStream {
-    private WriteLine writer;
-    private StringBuffer buffer = new StringBuffer();
+public class WriterStream extends OutputStream {
+    private final Writer writer;
+    private final StringBuffer buffer = new StringBuffer();
 
-    public StdoutStream(WriteLine writeLine) {
-        this.writer = writeLine;
+    public WriterStream(Writer writer) {
+        this.writer = writer;
     }
 
     @Override
