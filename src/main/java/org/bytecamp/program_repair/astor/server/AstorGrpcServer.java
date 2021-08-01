@@ -4,12 +4,12 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 
 public class AstorGrpcServer {
 
-    private static final Logger logger = Logger.getLogger(AstorGrpcServer.class.getName());
+    private static final Logger logger = Logger.getLogger(AstorGrpcServer.class);
 
     private final Server server;
 
@@ -25,7 +25,8 @@ public class AstorGrpcServer {
 
     private void start() throws IOException {
         server.start();
-        logger.info("Server started, listening on 10000");
+        logger.info("Server started, listening on 10000 " + logger.isInfoEnabled());
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             // Use stderr here since the logger may have been reset by its JVM shutdown hook.
             System.err.println("*** shutting down gRPC server since JVM is shutting down");

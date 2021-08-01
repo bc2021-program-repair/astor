@@ -1,4 +1,4 @@
-package org.bytecamp.program_repair.astor.server;
+package org.bytecamp.program_repair.astor.utils;
 
 import java.io.IOException;
 import java.io.OutputStream;
