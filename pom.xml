@@ -5,7 +5,7 @@
 	<groupId>org.inria.sacha.automaticRepair</groupId>
 	<artifactId>astor</artifactId>
 	<description>ASTOR: AST transformation for Repairs</description>
-	<version>1.1.4</version>
+	<version>1.1.5</version>
 
 	<name>ASTOR</name>
 	<url>https://github.com/SpoonLabs/astor</url>
