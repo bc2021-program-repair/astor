@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
   <Appenders>
-<!--    Console does not obey setout somehow-->
-    <StdoutAppender name="stdout">
-    </StdoutAppender>
+    <Console name="console">
+    </Console>
   </Appenders>
   <Loggers>
     <Logger name="io.grpc" level="info" additivity="false">
-      <AppenderRef ref="stdout"/>
+      <AppenderRef ref="console"/>
     </Logger>
     <Root level="debug">
-      <AppenderRef ref="stdout"/>
+      <AppenderRef ref="console"/>
     </Root>
   </Loggers>
 </Configuration>
