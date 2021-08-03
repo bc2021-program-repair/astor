@@ -351,7 +351,7 @@ public abstract class AstorCoreEngine implements AstorExtensionPoint {
 	//
 	// }
 
-	protected Map<String, CtType> saveOriginalVariant(ProgramVariant variant) {
+	static protected Map<String, CtType> saveOriginalVariant(ProgramVariant variant) {
 		// originalModel.clear();
 		Map<String, CtType> model = new HashedMap();
 		for (CtType st : variant.getAffectedClasses()) {
@@ -364,7 +364,7 @@ public abstract class AstorCoreEngine implements AstorExtensionPoint {
 		return model;
 	}
 
-	protected Map<String, String> saveModifVariant(ProgramVariant variant) {
+	static protected Map<String, String> saveModifVariant(ProgramVariant variant) {
 		// modifModel.clear();
 		Map<String, String> model = new HashedMap();
 		for (CtType st : variant.getAffectedClasses()) {

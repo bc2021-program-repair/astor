@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import fr.inria.astor.core.antipattern.AntiPattern;
@@ -126,10 +128,6 @@ public class EvolutionarySearchEngine extends AstorCoreEngine {
         return null;
     }
 
-    static boolean foundSolution = false;
-    static boolean foundOneVariant = false;
-    static AtomicInteger counter = new AtomicInteger(0);
-
     /**
      * Process a generation i: loops over all instances
      *
@@ -141,30 +139,29 @@ public class EvolutionarySearchEngine extends AstorCoreEngine {
         // System.out.println("new generation");
         log.debug("\n***** Generation " + generation + " : " + this.nrGenerationWithoutModificatedVariant);
 
-        foundSolution = false;
-        foundOneVariant = false;
-        counter.set(0);
+        AtomicBoolean foundSolution = new AtomicBoolean(false);
+        AtomicBoolean foundOneVariant = new AtomicBoolean(false);
 
+        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         List<ProgramVariant> temporalInstances = new ArrayList<ProgramVariant>();
 
+        // FIXME: Too many thread not safe operations
+        // TODO: change every method to either static or thread-safe(data wise and logic wise) via synchronized/concurrent data structure
         currentStat.increment(GeneralStatEnum.NR_GENERATIONS);
 
-        for (ProgramVariant parentVariant : variants) {
-
-            new Thread(() -> {
+        for (final ProgramVariant parentVariant : variants) {
+            executor.submit(() -> {
                 try {
                     System.out.println("[1] " + Thread.currentThread().getName());
-                    counter.incrementAndGet();
-                    System.out.println(counter.get());
+
                     log.debug("**Parent Variant: " + parentVariant);
 
-                    Map<String, CtType> originalModel = this.saveOriginalVariant(parentVariant);
+                    Map<String, CtType> originalModel = saveOriginalVariant(parentVariant);
                     ProgramVariant newVariant = createNewProgramVariant(parentVariant, generation);
-                    Map<String, String> modifModel = this.saveModifVariant(parentVariant);
+                    Map<String, String> modifModel = saveModifVariant(parentVariant);
 
                     System.out.println("[2] " + Thread.currentThread().getName());
                     if (newVariant == null) {
-                        counter.decrementAndGet();
                         return;
                     }
 
@@ -181,38 +178,33 @@ public class EvolutionarySearchEngine extends AstorCoreEngine {
                     }
                     System.out.println("[3] " + Thread.currentThread().getName());
                     if (solution) {
-                        foundSolution = true;
+                        foundSolution.set(true);
                         newVariant.setBornDate(new Date());
                     }
-                    foundOneVariant = true;
+                    foundOneVariant.set(true);
                     // Finally, reverse the changes done by the child
-                    reverseOperationInModel(newVariant, generation);
+//                    reverseOperationInModel(newVariant, generation);
                     boolean validation = this.validateReversedOriginalVariant(newVariant, originalModel, modifModel);
                     // if (foundSolution && ConfigurationProperties.getPropertyBool("stopfirst")) {
                     //     break;
                     // }
                     System.out.println("[4] " + Thread.currentThread().getName());
-                    counter.decrementAndGet();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    throw new RuntimeException();
+                    throw new RuntimeException(e);
                 }
-            }).start();
-            // Thread.sleep(100);
+            });
         }
-        while (counter.get() != 0) {
-            // System.out.println("wait "+counter.get());
-            Thread.sleep(100);
-        }
+        while (!executor.awaitTermination(50, TimeUnit.MILLISECONDS)) ;
         prepareNextGeneration(temporalInstances, generation);
 
-        if (!foundOneVariant)
+        if (!foundOneVariant.get())
             this.nrGenerationWithoutModificatedVariant++;
         else {
             this.nrGenerationWithoutModificatedVariant = 0;
         }
 
-        return foundSolution;
+        return foundSolution.get();
     }
 
     /**
