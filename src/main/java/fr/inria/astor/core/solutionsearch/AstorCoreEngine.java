@@ -323,35 +323,62 @@ public abstract class AstorCoreEngine implements AstorExtensionPoint {
 
 	}
 
-	Map<String, CtType> originalModel = new HashedMap();
-	Map<String, String> modifModel = new HashedMap();
+	// Map<String, CtType> originalModel = new HashedMap();
+	// Map<String, String> modifModel = new HashedMap();
+	//
+	// protected void saveOriginalVariant(ProgramVariant variant) {
+	// 	originalModel.clear();
+	// 	for (CtType st : variant.getAffectedClasses()) {
+	// 		try {
+	// 			originalModel.put(st.getQualifiedName(), st);
+	// 		} catch (Exception e) {
+	// 			log.error("Problems saving cttype: " + st.getQualifiedName());
+	// 		}
+	// 	}
+	//
+	// }
+	//
+	// protected void saveModifVariant(ProgramVariant variant) {
+	// 	modifModel.clear();
+	// 	for (CtType st : variant.getAffectedClasses()) {
+	// 		try {
+	// 			modifModel.put(st.getQualifiedName(), st.toString());
+	// 		} catch (Exception e) {
+	// 			log.error("Problems saving cttype: " + st.getQualifiedName());
+	// 		}
+	//
+	// 	}
+	//
+	// }
 
-	protected void saveOriginalVariant(ProgramVariant variant) {
-		originalModel.clear();
+	protected Map<String, CtType> saveOriginalVariant(ProgramVariant variant) {
+		// originalModel.clear();
+		Map<String, CtType> model = new HashedMap();
 		for (CtType st : variant.getAffectedClasses()) {
 			try {
-				originalModel.put(st.getQualifiedName(), st);
+				model.put(st.getQualifiedName(), st);
 			} catch (Exception e) {
 				log.error("Problems saving cttype: " + st.getQualifiedName());
 			}
 		}
-
+		return model;
 	}
 
-	protected void saveModifVariant(ProgramVariant variant) {
-		modifModel.clear();
+	protected Map<String, String> saveModifVariant(ProgramVariant variant) {
+		// modifModel.clear();
+		Map<String, String> model = new HashedMap();
 		for (CtType st : variant.getAffectedClasses()) {
 			try {
-				modifModel.put(st.getQualifiedName(), st.toString());
+				model.put(st.getQualifiedName(), st.toString());
 			} catch (Exception e) {
 				log.error("Problems saving cttype: " + st.getQualifiedName());
 			}
 
 		}
-
+		return model;
 	}
 
-	protected boolean validateReversedOriginalVariant(ProgramVariant variant) {
+	protected boolean validateReversedOriginalVariant(ProgramVariant variant,Map<String, CtType> originalModel,Map<String, String> modifModel) {
 
 		for (CtType st : variant.getAffectedClasses()) {
 			CtType original = originalModel.get(st.getQualifiedName());
