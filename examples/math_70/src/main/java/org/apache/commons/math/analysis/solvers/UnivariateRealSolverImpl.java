@@ -138,7 +138,7 @@ public abstract class UnivariateRealSolverImpl
      * @param iterationCount the iteration count to set
      */
     protected final void setResult(final double newResult, final int iterationCount) {
-        this.result         = newResult;
+        this.result = newResult;
         this.iterationCount = iterationCount;
         this.resultComputed = true;
     }
@@ -152,8 +152,8 @@ public abstract class UnivariateRealSolverImpl
      */
     protected final void setResult(final double x, final double fx,
                                    final int iterationCount) {
-        this.result         = x;
-        this.functionValue  = fx;
+        this.result = x;
+        this.functionValue = fx;
         this.iterationCount = iterationCount;
         this.resultComputed = true;
     }
@@ -248,7 +248,7 @@ public abstract class UnivariateRealSolverImpl
         if (!isBracketing(lower, upper, function)) {
             throw MathRuntimeException.createIllegalArgumentException(
                     "function values at endpoints do not have different signs.  " +
-                    "Endpoints: [{0}, {1}], Values: [{2}, {3}]",
+                            "Endpoints: [{0}, {1}], Values: [{2}, {3}]",
                     lower, upper, function.value(lower), function.value(upper));
         }
     }
